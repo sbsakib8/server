@@ -12,7 +12,7 @@ import { protect, authorize } from '../middleware/authMiddleware.js';
 const router = express.Router();
 
 router.route('/')
-    .get(protect, getProjects)
+    .get(protect, authorize('problem_solver', 'admin'), getProjects)
     .post(protect, authorize('buyer'), createProject);
 
 router.get('/my', protect, getMyProjects);
