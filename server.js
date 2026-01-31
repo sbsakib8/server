@@ -5,9 +5,17 @@ import app from './src/app.js';
 dotenv.config();
 
 const startServer = async () => {
-    await connectDB();
-    const PORT = process.env.PORT || 5000;
-    app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+    try {
+        await connectDB();
+        const PORT = process.env.PORT || 5000;
+        if (process.env.NODE_ENV !== 'production') {
+            app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+        }
+    } catch (err) {
+        console.error('Failed to start server:', err);
+    }
 };
 
 startServer();
+
+export default app;
